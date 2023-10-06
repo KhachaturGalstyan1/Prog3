@@ -121,9 +121,19 @@ for(let i in WaterArr){
 //         this.color=color
 //     }
 //     makeSound(){
-//         console.log(this.name + " makes sunds.");
+//         console.log(this.name + " makes sounds.");
 //     }
 // }
 
-// const rob = new Animal("Robik chopik","Negro")
-// rob.makeSound()
+//     // class Dog extends Animal {
+//     //     constructor(name, color){
+//     //         super(name,color)
+//     //     }
+//     //     makeSound(){
+//     //         super.makeSound()
+//     //         console.log("our Dog can bark");
+//     //     }
+//     // }
+
+// const Dog = new Animal("Bobik" , "Black")
+// Dog.makeSound()
