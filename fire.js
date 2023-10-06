@@ -1,10 +1,9 @@
-class Fire {
+class Fire extends Creature {
     constructor(x, y, index) {
-        this.x = x;
-        this.y = y;
+        super(x,y,index);
         this.energy = 14;
-        this.index = index;
         this.directions = [];
+        
     }
     getNewCoordinates() {
         this.directions = [

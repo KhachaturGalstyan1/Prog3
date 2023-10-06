@@ -1,6 +1,6 @@
 class Grass extends Creature{
     constructor(x, y, index) {
-        super (x, y, index)}
+        super (x, y, index);}
     chooseCell(character) {
         var found = [];
         for (var i in this.directions) {
