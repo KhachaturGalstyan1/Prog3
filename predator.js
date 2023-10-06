@@ -1,7 +1,6 @@
-class Predator {
+class Predator extends Creature {
     constructor(x, y, index) {
-        this.x = x;
-        this.y = y;
+        super(x,y,index);
         this.energy = 12;
         this.index = index;
         this.directions = [];
@@ -21,20 +20,8 @@ class Predator {
 
     chooseCell(character) {
         this.getNewCoordinates();
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == character) {
-                    found.push(this.directions[i]);
-                }
-            }
-        }
-        return found;
+        return super.chooseCell(character)
     }
-
-
     mul() {
         var newCell = random(this.chooseCell(2));//[5,4]
         if (newCell) {
