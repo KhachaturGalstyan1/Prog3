@@ -108,8 +108,22 @@ for(let i in WaterArr){
 }
 }
 
-let obj = {
-name: "john",
-age:"20"
-}
-console.log(obj.name);
+// let obj = {
+// name: "john",
+// age:"20"
+// }
+// console.log(obj.name);
+
+
+// class Animal{
+//     constructor(name, color){
+//         this.name=name
+//         this.color=color
+//     }
+//     makeSound(){
+//         console.log(this.name + " makes sunds.");
+//     }
+// }
+
+// const rob = new Animal("Robik chopik","Negro")
+// rob.makeSound()
