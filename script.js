@@ -107,3 +107,9 @@ for(let i in WaterArr){
     WaterArr[i].mul()
 }
 }
+
+let obj = {
+name: "john",
+age:"20"
+}
+console.log(obj.name);
