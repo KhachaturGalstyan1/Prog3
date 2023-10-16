@@ -1,29 +1,29 @@
-var matrix = [];
-var side = 25;
-var n = 30;
-var m = 40;
+// var matrix = [];
+// var side = 25;
+// var n = 30;
+// var m = 40;
 
-for (let i = 0; i < n; i++) {
-matrix.push([])
-for (let j = 0; j <m; j++) {
-matrix[i].push(0)
-}
-}
-function characters(index, count) {
-for (let a = 0; a < count; a++) {
-var v = Math.floor(random(0,n))
-var w = Math.floor(random(0,m))
-matrix[v][w] = index;
-}
-}
+// for (let i = 0; i < n; i++) {
+// matrix.push([])
+// for (let j = 0; j <m; j++) {
+// matrix[i].push(0)
+// }
+// }
+// function characters(index, count) {
+// for (let a = 0; a < count; a++) {
+// var v = Math.floor(random(0,n))
+// var w = Math.floor(random(0,m))
+// matrix[v][w] = index;
+// }
+// }
 
 
 
-let grassArr = []
-let grassEaterArr = []
-let PredatorArr = []
-let FireArr = []
-let WaterArr = []
+// let grassArr = []
+// let grassEaterArr = []
+// let PredatorArr = []
+// let FireArr = []
+// let WaterArr = []
 
 
 function setup() {

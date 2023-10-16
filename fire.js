@@ -1,4 +1,4 @@
-class Fire extends Creature {
+module.exports = class Fire extends Creature {
     constructor(x, y, index) {
         super(x,y,index);
         this.energy = 14;

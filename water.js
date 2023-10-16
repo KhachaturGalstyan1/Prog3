@@ -1,4 +1,4 @@
-class Water extends Creature {
+module.exports = class Water extends Creature {
     constructor(x, y, index) {
         super(x,y,index);
         this.energy = 12;
