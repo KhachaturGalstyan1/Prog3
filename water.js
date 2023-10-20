@@ -1,3 +1,4 @@
+let Creature = require("./creature")
 module.exports = class Water extends Creature {
     constructor(x, y, index) {
         super(x,y,index);
@@ -23,14 +24,13 @@ module.exports = class Water extends Creature {
         return super.chooseCell(character);
     }
     mul() {
-        var newCell = random(this.chooseCell(0));//[5,4]
+        var newCell = this.selectRandomCell();//[5,4]
         if (newCell) {
             var water = new Water (newCell[0], newCell[1], this.index);
             WaterArr.push(water);
             matrix[newCell[1]][newCell[0]] = 5;
         }
-        let foodsfire = this.chooseCell(4)
-        let foodfire = random(foodsfire)
+        let foodfire = this.selectRandomCell(4)
         if (foodfire) {
             matrix[this.y][this.x] = 0
             let newX = foodfire[0]
@@ -41,7 +41,7 @@ module.exports = class Water extends Creature {
             for (var i in FireArr) {
                 if (newX == FireArr[i].x && newY == FireArr[i].y) {
                     FireArr.splice(i, 1);
-                    fill("brown")
+                    // fill("blue")
                     break;
                 }
             }
@@ -50,11 +50,8 @@ module.exports = class Water extends Creature {
    this.move()
     }
         
-    
-
         eat() {
-            let foodsfire = this.chooseCell(4)
-            let foodfire = random(foodsfire)
+            let foodfire = this.selectRandomCell(4)
             if (foodfire) {
                 matrix[this.y][this.x] = 0
                 let newX = foodfire[0]
@@ -65,7 +62,7 @@ module.exports = class Water extends Creature {
                 for (var i in FireArr) {
                     if (newX == FireArr[i].x && newY == FireArr[i].y) {
                         FireArr.splice(i, 1);
-                        fill("brown")
+                        // fill("blue")
                         break;
                     }
                 }
@@ -75,8 +72,7 @@ module.exports = class Water extends Creature {
         }
     move() {
         // this.energy--;
-        let emptyCells = this.chooseCell(0)
-        let newCell = random(emptyCells)
+        let newCell = this.selectRandomCell(0)
         if (newCell) {
             let newX = newCell[0]
             let newY = newCell[1]

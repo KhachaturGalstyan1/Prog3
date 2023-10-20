@@ -30,4 +30,9 @@ module.exports = class Creature{
     return found;
  
  }
+selectRandomCell(character) {
+    const cells = this.chooseCell(character);
+    const randomIndex = Math.floor(Math.random() * cells.length);
+    return cells[randomIndex];
+    }
 }

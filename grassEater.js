@@ -1,3 +1,5 @@
+
+let Creature = require("./creature")
 module.exports = class GrassEater extends Creature {
     constructor(x, y, index) {
         super(x,y,index);
@@ -40,7 +42,7 @@ module.exports = class GrassEater extends Creature {
 
 
     mul() {
-        var newCell = random(this.chooseCell(0));//[5,4]
+        var newCell = this.selectRandomCell(0);//[5,4]
         if (newCell) {
             var newGrassEater = new GrassEater(newCell[0], newCell[1], this.index);
             grassEaterArr.push(newGrassEater);
@@ -49,8 +51,7 @@ module.exports = class GrassEater extends Creature {
     }
 
     eat() {
-        let foods = this.chooseCell(1)
-        let food = random(foods)
+        let food = this.selectRandomCell(1)
         if (food) {
             this.energy++;
             matrix[this.y][this.x] = 0
@@ -75,8 +76,7 @@ module.exports = class GrassEater extends Creature {
     }
     move() {
         // this.energy--;
-        let emptyCells = this.chooseCell(0)
-        let newCell = random(emptyCells)
+        let newCell = this.selectRandomCell(0)
         if (newCell) {
             let newX = newCell[0]
             let newY = newCell[1]

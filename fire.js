@@ -1,3 +1,4 @@
+let Creature = require("./creature")
 module.exports = class Fire extends Creature {
     constructor(x, y, index) {
         super(x,y,index);
@@ -33,15 +34,14 @@ module.exports = class Fire extends Creature {
         return found;
     }
     mul() {
-        var newCell = random(this.chooseCell(0));//[5,4]
+        var newCell = this.selectRandomCell(4);
         if (newCell) {
             var Firen = new Fire (newCell[0], newCell[1], this.index);
             FireArr.push(Firen);
             matrix[newCell[1]][newCell[0]] = 4;
 
         }
-        let foodsgrass = this.chooseCell(1)
-            let foodgrass = random(foodsgrass)
+            let foodgrass = this.selectRandomCell(1)
             if (foodgrass) {
                 matrix[this.y][this.x] = 0
                 let newX = foodgrass[0]
@@ -56,8 +56,7 @@ module.exports = class Fire extends Creature {
                     }
                 }
        }
-       let foodsgrassEater = this.chooseCell(2)
-            let foodgrassEater = random(foodsgrassEater)
+            let foodgrassEater = this.selectRandomCell(2)
             if (foodgrassEater) {
                 matrix[this.y][this.x] = 0
                 let newX = foodgrassEater[0]
@@ -72,8 +71,7 @@ module.exports = class Fire extends Creature {
                     }
            }
        }
-       let foodspredator = this.chooseCell(3)
-            let foodpredator = random(foodspredator)
+            let foodpredator = this.selectRandomCell(3)
             if (foodpredator) {
                 matrix[this.y][this.x] = 0
                 let newX = foodpredator[0]
@@ -94,8 +92,7 @@ module.exports = class Fire extends Creature {
 
         
     move() {
-        let emptyCells = this.chooseCell(0)
-        let newCell = random(emptyCells)
+        var newCell = this.selectRandomCell(0);
         if (newCell) {
             let newX = newCell[0]
             let newY = newCell[1]
