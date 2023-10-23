@@ -8,6 +8,29 @@ function setup() {
     background('#acacac');
 }
 
+const pauseBtn = document.querySelector("#pause")
+const resumeBtn = document.querySelector("#resume")
+const restartBtn = document.querySelector("#restart")
+
+
+
+pause.addEventListener("click", handlePauseGame)
+resume.addEventListener("click", handleResumeGame)
+restart.addEventListener("click", handleRestartGame)
+
+let ifPaused = false
+function handlePauseGame() {
+    ifPaused = true
+    socket.emit("pause game", ifPaused)
+}
+function handleRestartGame() {
+    // socket.emit("restart game")
+}
+function handleResumeGame() {
+    ifPaused = false
+    socket.emit("pause game", ifPaused)
+}
+
 const socket = io()
 
 function drawMatrix(matrix) {
@@ -39,4 +62,6 @@ function drawMatrix(matrix) {
     }
 
 }
- socket.on("draw matrix", drawMatrix)
+
+
+socket.on("draw matrix", drawMatrix)
