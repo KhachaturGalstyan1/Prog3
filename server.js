@@ -18,7 +18,7 @@ io.on('stop', function (socket) {
 })
 
 
-function pause(){
+function pause() {
     clearInterval()
 }
 
@@ -115,19 +115,28 @@ function initArrays() {
 let speed = 300;
 
 let intID;
-function startInterval(){
+function startInterval() {
     clearInterval(intID)
-    intID = setInterval(function(){
+    intID = setInterval(function () {
         playGame()
-    },speed)
+    }, speed)
 }
 
 
 
 function gameInit() {
-    matrix = fillMatrix(cellNum, 200, 18, 12, 4, 4)
+    matrix = fillMatrix(cellNum, 200, 18, 12, 4, 4, 6)
     initArrays()
     startInterval()
+    statisticsObj = {
+        grass: 0,
+        grassEater: 0,
+        predaor: 0,
+        water: 0,
+        fire: 0,
+        BlackHole: 0,
+    }
+    
 }
 
 function playGame() {
@@ -161,18 +170,32 @@ io.on('connection', function (socket) {
     socket.on('pause game', handlePauseGame)
     socket.on('restart game', handleRestartGame)
     socket.on('resume game', handlePauseGame)
-    socket.on('restart + stop game', handleResstpGame)
+    // socket.on('restart + stop game', handleResstpGame)
+    socket.on('change season ', handleChangeSeason)
+
 })
 
+function handleChangeSeason(season) {
+    if (season == 1) {
+        speed = 1000
+        
+    }
+    else if (season == 2 || season == 4) {
+        speed = 700
+    }
+    else {
+        speed = 300
+    }
+}
 
-function handlePauseGame(ifPaused){
-    if(ifPaused){
+function handlePauseGame(ifPaused) {
+    if (ifPaused) {
         clearInterval(intID)
-    }else{
+    } else {
         startInterval()
     }
 }
-function handleRestartGame(){
+function handleRestartGame() {
     clearInterval(intID)
     gameInit()
 }

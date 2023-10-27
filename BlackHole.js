@@ -41,7 +41,7 @@ module.exports = class BlackHole extends Creature {
             statisticsObj.BlackHole++
             io.emit('change statistics', statisticsObj)
             var BlackHolen = new BlackHole (newCell[0], newCell[1], this.index);
-            FireArr.push(BlackHolen);
+            BlackHoleArr.push(BlackHolen);
             matrix[newCell[1]][newCell[0]] = 6;
 
         }
@@ -93,14 +93,14 @@ module.exports = class BlackHole extends Creature {
        let foodfire = this.selectRandomCell(4)
        if (foodfire) {
            matrix[this.y][this.x] = 0
-           let newX = foodpredator[0]
-           let newY = foodpredator[1]
+           let newX = foodfire[0]
+           let newY = foodfire[1]
            matrix[newY][newX] = 6
            this.x = newX
            this.y = newY
-           for (var i in PredatorArr) {
-               if (newX == PredatorArr[i].x && newY == PredatorArr[i].y) {
-                   PredatorArr.splice(i, 1);
+           for (var i in FireArr) {
+               if (newX == FireArr[i].x && newY == FireArr[i].y) {
+                   FireArr.splice(i, 1);
                    break;
                }
       }
@@ -108,14 +108,14 @@ module.exports = class BlackHole extends Creature {
   let foodwater = this.selectRandomCell(5)
   if (foodwater) {
       matrix[this.y][this.x] = 0
-      let newX = foodpredator[0]
-      let newY = foodpredator[1]
+      let newX = foodwater[0]
+      let newY = foodwater[1]
       matrix[newY][newX] = 6
       this.x = newX
       this.y = newY
-      for (var i in PredatorArr) {
-          if (newX == PredatorArr[i].x && newY == PredatorArr[i].y) {
-              PredatorArr.splice(i, 1);
+      for (var i in WaterArr) {
+          if (newX == WaterArr[i].x && newY == WaterArr[i].y) {
+              WaterArr.splice(i, 1);
               break;
           }
  }
