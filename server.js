@@ -4,15 +4,26 @@ const http = require("http")
 
 const server = http.createServer(app)
 const io = require('socket.io')(server);
+module.exports = io;
+
+
 
 app.use(express.static("."));
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
     res.redirect("index.html")
+})
+io.on('stop', function (socket) {
+    socket.listen("pause game", matrix)
+    pause()
 })
 
 
+function pause(){
+    clearInterval()
+}
+
 let cellNum = 40;
-let side = 20;
+let side = 40;
 
 matrix = []
 grassArr = []
@@ -20,13 +31,17 @@ grassEaterArr = []
 PredatorArr = []
 FireArr = []
 WaterArr = []
+BlackHoleArr = [
+
+]
 let Grass = require("./grass.js")
 let GrassEater = require("./grassEater.js")
 let Predator = require("./predator.js")
 let Water = require("./water.js")
 let Fire = require("./fire.js")
+let BlackHole = require("./BlackHole.js")
 
-function fillMatrix(cellNum, grassNum, grassEaterNum, PredatorNum, FireNum, WaterNum) {
+function fillMatrix(cellNum, grassNum, grassEaterNum, PredatorNum, FireNum, WaterNum, BlackHoleNum) {
     let matrix = [];
     for (let y = 0; y < cellNum; y++) {
         matrix[y] = [];
@@ -50,6 +65,7 @@ function fillMatrix(cellNum, grassNum, grassEaterNum, PredatorNum, FireNum, Wate
     fillRandomCells(3, PredatorNum);
     fillRandomCells(4, FireNum);
     fillRandomCells(5, WaterNum);
+    fillRandomCells(6, BlackHoleNum);
 
     return matrix;
 }
@@ -60,6 +76,7 @@ function initArrays() {
     PredatorArr = []
     FireArr = []
     WaterArr = []
+    BlackHoleArr = []
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
             if (matrix[y][x] == 1) {
@@ -85,6 +102,11 @@ function initArrays() {
                 WaterArr.push(Watern)
 
             }
+            else if (matrix[y][x] == 6) {
+                var BlackHolen = new BlackHole(x, y, 6)
+                BlackHoleArr.push(BlackHolen)
+
+            }
         }
     }
 
@@ -92,27 +114,14 @@ function initArrays() {
 }
 let speed = 300;
 
-let inId;
-
-function handlePauseGame(ifPaused){
-    if(ifPaused){
-        clearInterval(intId)
-    }else{
-        startInterval()
-    }
-}
-
-// function handleRestartGame(){
-//     clearInterval()
-//     gameInit()
-// }
-
-function startInterval() {
-    clearInterval(inId)
-    intId = setInterval(function () {
+let intID;
+function startInterval(){
+    clearInterval(intID)
+    intID = setInterval(function(){
         playGame()
-    }, speed)
+    },speed)
 }
+
 
 
 function gameInit() {
@@ -137,23 +146,51 @@ function playGame() {
     for (let i in WaterArr) {
         WaterArr[i].mul()
     }
+    for (let i in BlackHoleArr) {
+        BlackHoleArr[i].mul()
+    }
 
     io.emit("draw matrix", matrix)
 }
 
 
 
-io.on("connection", function (socket){
-    socket.emit("draw matrix", matrix);
+io.on('connection', function (socket) {
+    socket.emit('draw matrix', matrix)
     gameInit()
-    socket.on("pause game", handlePauseGame)
-    // socket.on("restart game", handleRestartGame)
+    socket.on('pause game', handlePauseGame)
+    socket.on('restart game', handleRestartGame)
+    socket.on('resume game', handlePauseGame)
+    socket.on('restart + stop game', handleResstpGame)
 })
 
 
+function handlePauseGame(ifPaused){
+    if(ifPaused){
+        clearInterval(intID)
+    }else{
+        startInterval()
+    }
+}
+function handleRestartGame(){
+    clearInterval(intID)
+    gameInit()
+}
+// function handleResstpGame(){
+//     handleRestartGame()
+//     handlePauseGame()
+// }
 server.listen(3500, () => {
     console.log("Server is Listenin to port 3500");
 
 })
 
-console.log(matrix)
+statisticsObj = {
+    grass: 0,
+    grassEater: 0,
+    predaor: 0,
+    water: 0,
+    fire: 0,
+    BlackHole: 0,
+}
+

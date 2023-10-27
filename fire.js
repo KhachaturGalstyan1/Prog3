@@ -1,4 +1,6 @@
 let Creature = require("./creature")
+const io = require('./server')
+
 module.exports = class Fire extends Creature {
     constructor(x, y, index) {
         super(x,y,index);
@@ -34,8 +36,10 @@ module.exports = class Fire extends Creature {
         return found;
     }
     mul() {
-        var newCell = this.selectRandomCell(4);
+        var newCell = this.selectRandomCell(0);
         if (newCell) {
+            statisticsObj.fire++
+            io.emit('change statistics', statisticsObj)
             var Firen = new Fire (newCell[0], newCell[1], this.index);
             FireArr.push(Firen);
             matrix[newCell[1]][newCell[0]] = 4;

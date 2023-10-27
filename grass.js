@@ -1,4 +1,5 @@
 let Creature = require("./creature")
+const io = require('./server')
 
 module.exports = class Grass  extends Creature{
     constructor(x, y, index) {
@@ -22,6 +23,8 @@ module.exports = class Grass  extends Creature{
     this.multiply++;
     var newCell = this.selectRandomCell(0);
     if (this.multiply >= 8 && newCell) {
+        statisticsObj.grass++
+        io.emit('change statistics', statisticsObj)
         var newGrass = new Grass(newCell[0], newCell[1], this.index);
         grassArr.push(newGrass);
         matrix[newCell[1]][newCell[0]] = 1;

@@ -1,4 +1,6 @@
 let Creature = require("./creature")
+const io = require("./server")
+
 module.exports = class Predator extends Creature {
     constructor(x, y, index) {
         super(x,y,index);
@@ -26,6 +28,8 @@ module.exports = class Predator extends Creature {
     mul() {
         var newCell = this.selectRandomCell();//[5,4]
         if (newCell) {
+            statisticsObj.fire++
+            io.emit('change statistics', statisticsObj)
             var Predatorn = new Predator(newCell[0], newCell[1], this.index);
             PredatorArr.push(Predatorn);
             matrix[newCell[1]][newCell[0]] = 3;

@@ -1,6 +1,58 @@
 // import { Socket } from "socket.io";
-cellNum = 40;
-side = 20;
+const socket = io()
+let cellNum = 40;
+let side = 20;
+
+
+
+
+const pauseBtn = document.querySelector("#pause")
+const resumeBtn = document.querySelector("#resume")
+const restartBtn = document.querySelector("#restart")
+// const resstpBtn = document.querySelector("#resstp")
+
+// const winterBtn = document.querySelector("#winter")
+
+
+
+pause.addEventListener("click", handlePauseGame)
+resume.addEventListener("click", handleResumeGame)
+restart.addEventListener("click", handleRestartGame)
+// resstp.addEventListener("click", handleResstpGame)
+
+socket.on("change statistics", handleAddStatistics)
+
+function handleAddStatistics(Obj){
+    grass.innerText = "New grasses: " + Obj.grass;
+    grassEater.innerText = "New grasEaters: " + Obj.grassEater;
+    predator.innerText = "New Predator: " + Obj.predator;
+    fire.innerText = "New predator: " + Obj.fire;
+    water.innerText = "New water: " + Obj.water;
+    BlackHole.innerText = "New BlackHoles: " + Obj.BlackHole;
+}
+
+// function handleResstpGame(){
+//     handleRestartGame()
+//     handlePauseGame()
+//     socket.emit('restart + stop game',)
+// }
+let ifPaused = false
+function handleResumeGame(){
+    ifPaused = false
+    socket.emit('resume game', ifPaused)
+}
+
+function handleRestartGame(){
+    socket.emit('restart game')
+}
+
+
+
+
+function handlePauseGame() {
+    ifPaused = true
+    socket.emit("pause game", ifPaused)
+}
 
 
 function setup() {
@@ -8,30 +60,25 @@ function setup() {
     background('#acacac');
 }
 
-const pauseBtn = document.querySelector("#pause")
-const resumeBtn = document.querySelector("#resume")
-const restartBtn = document.querySelector("#restart")
-
-
-
-pause.addEventListener("click", handlePauseGame)
-resume.addEventListener("click", handleResumeGame)
-restart.addEventListener("click", handleRestartGame)
-
-let ifPaused = false
-function handlePauseGame() {
-    ifPaused = true
-    socket.emit("pause game", ifPaused)
+function handleChangeSeason(){
+    if (season <4){
+        season++;
+    } else {
+        season = 1;
+    }
 }
-function handleRestartGame() {
-    // socket.emit("restart game")
-}
-function handleResumeGame() {
-    ifPaused = false
-    socket.emit("pause game", ifPaused)
-}
+socket.emit("change season", season)
+    if(season = 1){
+        seasonsBtn.textContent = "Winter"
+    }else if(season = 2){
+        seasonsBtn.textContent = "Spring"
+    }else if(season = 3){
+        seasonsBtn.textContent = "Summer"
+    }
+    else if(season = 4){
+        seasonsBtn.textContent = "Autumn"
+    }
 
-const socket = io()
 
 function drawMatrix(matrix) {
 
@@ -55,6 +102,9 @@ function drawMatrix(matrix) {
             }
             else if (matrix[y][x] == 5) {
                 fill("blue")
+            }
+            else if (matrix[y][x] == 6) {
+                fill("black")
             }
 
             rect(x * side, y * side, side, side);

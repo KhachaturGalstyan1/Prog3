@@ -1,4 +1,6 @@
 let Creature = require("./creature")
+const io = require('./server')
+
 module.exports = class Water extends Creature {
     constructor(x, y, index) {
         super(x,y,index);
@@ -24,8 +26,10 @@ module.exports = class Water extends Creature {
         return super.chooseCell(character);
     }
     mul() {
-        var newCell = this.selectRandomCell();//[5,4]
+        var newCell = this.selectRandomCell(0);//[5,4]
         if (newCell) {
+            statisticsObj.water++
+            io.emit('change statistics', statisticsObj)
             var water = new Water (newCell[0], newCell[1], this.index);
             WaterArr.push(water);
             matrix[newCell[1]][newCell[0]] = 5;
